@@ -35,8 +35,10 @@ class Lexer {
   private static final String ZZ_CMAP_PACKED = 
     "\11\0\1\3\1\5\1\6\1\6\1\5\22\0\1\3\7\0\1\17"+
     "\1\20\1\16\1\11\1\7\1\12\1\24\1\4\12\2\1\23\1\10"+
-    "\1\15\1\14\1\13\2\0\32\1\1\21\1\0\1\22\1\0\1\1"+
-    "\1\0\32\1\12\0\1\6\u1fa2\0\1\6\1\6\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
+    "\1\15\1\14\1\13\2\0\1\31\2\1\1\32\4\1\1\34\3\1"+
+    "\1\36\1\25\1\26\2\1\1\30\1\1\1\27\1\1\1\35\1\1"+
+    "\1\33\2\1\1\21\1\0\1\22\1\0\1\1\1\0\32\1\12\0"+
+    "\1\6\u1fa2\0\1\6\1\6\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
 
   /** 
    * Translates characters to character classes
@@ -51,12 +53,13 @@ class Lexer {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7"+
     "\1\10\1\11\1\12\1\13\1\1\1\14\2\1\1\15"+
-    "\1\16\1\4\1\17\1\20\1\21\1\22\1\23\1\24"+
-    "\1\25\1\26\1\27\1\30\1\31\1\0\1\32\1\33"+
-    "\1\34\1\35\1\36\1\0\1\3";
+    "\1\16\6\2\1\4\1\17\1\20\1\21\1\22\1\23"+
+    "\1\24\1\25\1\26\1\27\1\30\1\31\1\0\1\32"+
+    "\1\33\1\34\1\2\1\35\4\2\1\36\1\37\1\0"+
+    "\1\40\1\41\1\42\1\43\1\44\1\3";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[38];
+    int [] result = new int[55];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -81,14 +84,16 @@ class Lexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\25\0\52\0\77\0\25\0\124\0\25\0\25"+
-    "\0\151\0\176\0\223\0\25\0\250\0\275\0\322\0\347"+
-    "\0\374\0\25\0\u0111\0\25\0\25\0\25\0\25\0\25"+
-    "\0\u0126\0\25\0\25\0\25\0\u013b\0\25\0\u0150\0\25"+
-    "\0\25\0\25\0\25\0\25\0\u0165\0\25";
+    "\0\0\0\37\0\76\0\135\0\37\0\174\0\37\0\37"+
+    "\0\233\0\272\0\331\0\37\0\370\0\u0117\0\u0136\0\u0155"+
+    "\0\u0174\0\37\0\u0193\0\u01b2\0\u01d1\0\u01f0\0\u020f\0\u022e"+
+    "\0\u024d\0\37\0\37\0\37\0\37\0\37\0\u026c\0\37"+
+    "\0\37\0\37\0\u028b\0\37\0\u02aa\0\37\0\37\0\37"+
+    "\0\u02c9\0\76\0\u02e8\0\u0307\0\u0326\0\u0345\0\37\0\37"+
+    "\0\u0364\0\76\0\76\0\76\0\76\0\76\0\37";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[38];
+    int [] result = new int[55];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -113,16 +118,25 @@ class Lexer {
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\4\1\5\1\6\1\5\1\0\1\7"+
     "\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17"+
-    "\1\2\1\20\1\2\1\21\1\22\26\0\2\3\24\0"+
-    "\1\4\26\0\1\23\7\0\1\24\21\0\1\25\2\0"+
-    "\1\26\22\0\1\27\1\0\1\30\23\0\1\31\1\32"+
-    "\23\0\1\33\1\34\1\35\23\0\1\36\22\0\1\37"+
-    "\5\0\1\40\26\0\1\41\16\0\1\42\10\0\5\23"+
-    "\2\0\16\23\14\0\1\43\24\0\1\44\12\0\1\45"+
-    "\24\0\1\45\15\0\1\46\4\0";
+    "\1\2\1\20\1\2\1\21\1\22\1\23\1\24\2\3"+
+    "\1\25\1\26\1\27\2\3\1\30\40\0\2\3\22\0"+
+    "\12\3\2\0\1\4\40\0\1\31\7\0\1\32\33\0"+
+    "\1\33\2\0\1\34\34\0\1\35\1\0\1\36\35\0"+
+    "\1\37\1\40\35\0\1\41\1\42\1\43\35\0\1\44"+
+    "\34\0\1\45\5\0\1\46\40\0\1\47\30\0\1\50"+
+    "\23\0\2\3\22\0\1\3\1\51\10\3\1\0\2\3"+
+    "\22\0\3\3\1\52\6\3\1\0\2\3\22\0\1\53"+
+    "\11\3\1\0\2\3\22\0\7\3\1\54\2\3\1\0"+
+    "\2\3\22\0\1\3\1\55\10\3\1\0\2\3\22\0"+
+    "\1\3\1\56\10\3\5\31\2\0\30\31\14\0\1\57"+
+    "\36\0\1\60\24\0\1\61\35\0\2\3\22\0\2\3"+
+    "\1\62\7\3\1\0\2\3\22\0\5\3\1\63\4\3"+
+    "\1\0\2\3\22\0\10\3\1\64\1\3\1\0\2\3"+
+    "\22\0\3\3\1\65\6\3\1\0\2\3\22\0\5\3"+
+    "\1\66\4\3\2\0\1\61\15\0\1\67\16\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[378];
+    int [] result = new int[899];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -161,11 +175,11 @@ class Lexer {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\2\1\1\11\1\1\2\11\3\1\1\11"+
-    "\5\1\1\11\1\1\5\11\1\1\3\11\1\1\1\11"+
-    "\1\0\5\11\1\0\1\11";
+    "\5\1\1\11\7\1\5\11\1\1\3\11\1\1\1\11"+
+    "\1\0\3\11\6\1\2\11\1\0\5\1\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[38];
+    int [] result = new int[55];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -265,7 +279,7 @@ public Integer line;
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 108) {
+    while (i < 142) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -614,123 +628,147 @@ public Integer line;
           case 1: 
             { return ERROR;
             }
-          case 31: break;
+          case 37: break;
           case 2: 
             { lexeme=yytext(); line=yyline; return ID;
             }
-          case 32: break;
+          case 38: break;
           case 3: 
             { lexeme=yytext(); line=yyline; return INT;
             }
-          case 33: break;
+          case 39: break;
           case 4: 
             { /*Ignore*/
             }
-          case 34: break;
-          case 5: 
-            { return DIV;
-            }
-          case 35: break;
-          case 6: 
-            { return COMMA;
-            }
-          case 36: break;
-          case 7: 
-            { return SEMICOLON;
-            }
-          case 37: break;
-          case 8: 
-            { return PLUS;
-            }
-          case 38: break;
-          case 9: 
-            { return MINUS;
-            }
-          case 39: break;
-          case 10: 
-            { return GREATER_THAN;
-            }
           case 40: break;
-          case 11: 
-            { return ASSIGN;
+          case 5: 
+            { lexeme=yytext(); line=yyline; return DIVISION;
             }
           case 41: break;
-          case 12: 
-            { return TIMES;
+          case 6: 
+            { lexeme=yytext(); line=yyline; return COMMA;
             }
           case 42: break;
-          case 13: 
-            { return COLON;
+          case 7: 
+            { lexeme=yytext(); line=yyline; return SEMICOLON;
             }
           case 43: break;
-          case 14: 
-            { return PERIOD;
+          case 8: 
+            { lexeme=yytext(); line=yyline; return PLUS;
             }
           case 44: break;
-          case 15: 
-            { return DIV_ASSIGN;
+          case 9: 
+            { lexeme=yytext(); line=yyline; return MINUS;
             }
           case 45: break;
-          case 16: 
-            { return PLUS_PLUS;
+          case 10: 
+            { lexeme=yytext(); line=yyline; return GREATER_THAN;
             }
           case 46: break;
-          case 17: 
-            { return SUM_ASSIGN;
+          case 11: 
+            { lexeme=yytext(); line=yyline; return ASSIGN;
             }
           case 47: break;
-          case 18: 
-            { return MINUS_MINUS;
+          case 12: 
+            { lexeme=yytext(); line=yyline; return TIMES;
             }
           case 48: break;
-          case 19: 
-            { return MINUS_ASSIGN;
+          case 13: 
+            { lexeme=yytext(); line=yyline; return COLON;
             }
           case 49: break;
-          case 20: 
-            { return LEFT;
+          case 14: 
+            { lexeme=yytext(); line=yyline; return PERIOD;
             }
           case 50: break;
-          case 21: 
-            { return GREATER_OR_EQUAL_THAN;
+          case 15: 
+            { lexeme=yytext(); line=yyline; return DIV_ASSIGN;
             }
           case 51: break;
-          case 22: 
-            { return LESS_GREATER;
+          case 16: 
+            { lexeme=yytext(); line=yyline; return PLUS_PLUS;
             }
           case 52: break;
-          case 23: 
-            { return LESS_OR_EQUAL_THAN;
+          case 17: 
+            { lexeme=yytext(); line=yyline; return SUM_ASSIGN;
             }
           case 53: break;
-          case 24: 
-            { return RIGHT;
+          case 18: 
+            { lexeme=yytext(); line=yyline; return MINUS_MINUS;
             }
           case 54: break;
-          case 25: 
-            { return TIMES_ASSIGN;
+          case 19: 
+            { lexeme=yytext(); line=yyline; return MINUS_ASSIGN;
             }
           case 55: break;
-          case 26: 
-            { return PARENT;
+          case 20: 
+            { lexeme=yytext(); line=yyline; return LEFT;
             }
           case 56: break;
-          case 27: 
-            { return COL;
+          case 21: 
+            { lexeme=yytext(); line=yyline; return GREATER_OR_EQUAL_THAN;
             }
           case 57: break;
-          case 28: 
-            { return COLON_ASSIGN;
+          case 22: 
+            { lexeme=yytext(); line=yyline; return LESS_GREATER;
             }
           case 58: break;
-          case 29: 
-            { return LEFT_ASSIGN;
+          case 23: 
+            { lexeme=yytext(); line=yyline; return LESS_OR_EQUAL_THAN;
             }
           case 59: break;
-          case 30: 
-            { return RIGHT_ASSIGN;
+          case 24: 
+            { lexeme=yytext(); line=yyline; return RIGHT;
             }
           case 60: break;
+          case 25: 
+            { lexeme=yytext(); line=yyline; return TIMES_ASSIGN;
+            }
+          case 61: break;
+          case 26: 
+            { lexeme=yytext(); line=yyline; return PARENT;
+            }
+          case 62: break;
+          case 27: 
+            { lexeme=yytext(); line=yyline; return COL;
+            }
+          case 63: break;
+          case 28: 
+            { lexeme=yytext(); line=yyline; return COLON_ASSIGN;
+            }
+          case 64: break;
+          case 29: 
+            { lexeme=yytext(); line=yyline; return OR;
+            }
+          case 65: break;
+          case 30: 
+            { lexeme=yytext(); line=yyline; return LEFT_ASSIGN;
+            }
+          case 66: break;
+          case 31: 
+            { lexeme=yytext(); line=yyline; return RIGHT_ASSIGN;
+            }
+          case 67: break;
+          case 32: 
+            { lexeme=yytext(); line=yyline; return NOT;
+            }
+          case 68: break;
+          case 33: 
+            { lexeme=yytext(); line=yyline; return AND;
+            }
+          case 69: break;
+          case 34: 
+            { lexeme=yytext(); line=yyline; return DIV;
+            }
+          case 70: break;
+          case 35: 
+            { lexeme=yytext(); line=yyline; return XOR;
+            }
+          case 71: break;
+          case 36: 
+            { lexeme=yytext(); line=yyline; return MOD;
+            }
+          case 72: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
