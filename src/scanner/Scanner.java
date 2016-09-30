@@ -20,7 +20,10 @@ public class Scanner {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String path = "C:/Users/erosh/Documents/Proyectos/Netbeans/Scanner/src/lexer/Lexer.flex";
+        File f1 = new File("src/lexer/Lexer.flex");
+        String path = f1.getAbsolutePath();
+        //filePath+="src/lexer/Lexer.flex";
+        System.out.println(path);
         generateLexer(path);
     }
     
