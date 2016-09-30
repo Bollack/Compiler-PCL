@@ -3,6 +3,7 @@ import static Token.*;
 %%
 %class Lexer
 %type Token
+%line
 Letters = [a-zA-Z_]
 Digits = [0-9]
 WHITE=[ \t\r\n]

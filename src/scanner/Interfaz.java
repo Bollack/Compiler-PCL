@@ -14,8 +14,10 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-import scanner.Lexer;
+import lexer.Lexer;
 
 /**
  *
@@ -40,21 +42,17 @@ public class Interfaz extends javax.swing.JFrame {
     private void initComponents() {
 
         labelText = new javax.swing.JLabel();
-        textField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
         labelTable = new javax.swing.JLabel();
-        buttonCompile = new javax.swing.JButton();
+        scanButton = new javax.swing.JButton();
+        routeToFileField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Scanner PCL");
 
-        labelText.setText("Texto");
-
-        textField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldActionPerformed(evt);
-            }
-        });
+        labelText.setText("Ruta:");
 
         textArea.setColumns(20);
         textArea.setRows(5);
@@ -62,10 +60,24 @@ public class Interfaz extends javax.swing.JFrame {
 
         labelTable.setText("Tabla de Tokens");
 
-        buttonCompile.setText("Analizar");
-        buttonCompile.addActionListener(new java.awt.event.ActionListener() {
+        scanButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        scanButton.setText("Obtener tokens");
+        scanButton.setDoubleBuffered(true);
+        scanButton.setEnabled(false);
+        scanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCompileActionPerformed(evt);
+                scanButtonActionPerformed(evt);
+            }
+        });
+
+        routeToFileField.setText("Ruta a archivo...");
+        routeToFileField.setToolTipText("Ruta al archivo pcl a leer");
+
+        searchButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchButton.setText("Buscar");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
             }
         });
 
@@ -74,48 +86,62 @@ public class Interfaz extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelTable)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(buttonCompile)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(labelText)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
-                            .addComponent(textField))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTable)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelText)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(routeToFileField, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(211, 211, 211)
+                                .addComponent(scanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(labelText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonCompile)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelText)
+                    .addComponent(routeToFileField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton))
+                .addGap(8, 8, 8)
+                .addComponent(scanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
                 .addComponent(labelTable)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldActionPerformed
-
-    private void buttonCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCompileActionPerformed
+    private void scanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scanButtonActionPerformed
         try {
             analizeLexer();
         }
         catch (IOException ex){
             System.out.println(ex.getMessage());
         }
-    }//GEN-LAST:event_buttonCompileActionPerformed
+    }//GEN-LAST:event_scanButtonActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        try {
+            // TODO add your handling code here:
+            this.seekFile();
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_searchButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,7 +178,25 @@ public class Interfaz extends javax.swing.JFrame {
         });
     }
     
-    public void analizeLexer() throws IOException {
+    private void seekFile() throws IOException {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            "Only pcl files", "pcl");
+        chooser.setFileFilter(filter);
+        
+        int output = chooser.showOpenDialog(this);
+        String fileRoute = "";
+        if (output == JFileChooser.APPROVE_OPTION) { //Se seleccionó archivo
+            fileRoute = chooser.getSelectedFile().getAbsolutePath();
+            System.out.println(fileRoute);
+            routeToFileField.setText(fileRoute);
+            scanButton.setEnabled(true);
+        }
+    }
+    
+    
+    private void analizeLexer() throws IOException {
+        /*/
         File document = new File ("Result.txt");
         PrintWriter writer;
         try {
@@ -165,6 +209,12 @@ public class Interfaz extends javax.swing.JFrame {
         Reader reader = new BufferedReader (new FileReader("Result.txt"));
         Lexer lexer = new Lexer (reader);
         String result = "";
+        */
+
+        Reader reader = new BufferedReader (new FileReader(routeToFileField.getText()));
+        Lexer lexer = new Lexer(reader);
+        String result = "";
+        
         while (true){
             Token token = lexer.yylex();
             if (token == null) {
@@ -186,11 +236,12 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCompile;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelTable;
     private javax.swing.JLabel labelText;
+    private javax.swing.JTextField routeToFileField;
+    private javax.swing.JButton scanButton;
+    private javax.swing.JButton searchButton;
     private javax.swing.JTextArea textArea;
-    private javax.swing.JTextField textField;
     // End of variables declaration//GEN-END:variables
 }
