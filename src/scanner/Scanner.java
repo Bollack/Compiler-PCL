@@ -6,6 +6,9 @@
 package scanner;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -24,6 +27,23 @@ public class Scanner {
     public static void generateLexer(String path){
         File file = new File(path);
         jflex.Main.generate(file);
+    }
+    
+    class Token {
+        String value;
+        String type;
+        Map<Integer, Integer> row = new TreeMap<Integer, Integer>();
+        ArrayList<TreeMap> rowsArray = new ArrayList<TreeMap>();
+        
+        public Token() {
+            // Constructor
+        }
+        
+        
+    }
+    
+    public Scanner(String result){
+        
     }
     
 }
