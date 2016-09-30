@@ -177,7 +177,7 @@ public class Interfaz extends javax.swing.JFrame {
                     result = result + "Error, simbolo no reconocido \n";
                     break;
                 case ID: case INT:
-                    result = result + "TOKEN: " + token + " " + lexer.lexeme + "\n";
+                    result = result + "TOKEN: " + token + " " + lexer.lexeme + " " + lexer.line + "\n";
                     break;
                 default:
                     result = result + "TOKEN: " + token + "\n";

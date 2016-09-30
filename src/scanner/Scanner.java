@@ -32,14 +32,16 @@ public class Scanner {
     class Token {
         String value;
         String type;
-        Map<Integer, Integer> row = new TreeMap<Integer, Integer>();
-        ArrayList<TreeMap> rowsArray = new ArrayList<TreeMap>();
-        
-        public Token() {
-            // Constructor
+        Map<Integer, Integer> row;
+        ArrayList<TreeMap> rowsArray = new ArrayList<>();
+    
+        public Token(String inputValue, String inputType, TreeMap inputRow) {
+            this.row = new TreeMap<>();
+            value = inputValue;
+            type = inputType;
+            row = inputRow;
+            rowsArray.add((TreeMap) row);
         }
-        
-        
     }
     
     public Scanner(String result){
