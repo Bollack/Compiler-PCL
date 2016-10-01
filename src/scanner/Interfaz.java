@@ -244,7 +244,7 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, "Token", row);
+                        objectToken objectToken = new objectToken(valor, "Tipo", row);
                         tokensArray.add(objectToken);
                     }
                     
@@ -265,12 +265,12 @@ public class Interfaz extends javax.swing.JFrame {
             if(keyValue.equals(linea)){
                 Integer repeticiones = Integer.parseInt(tokensArray.get(position).rowsArray.get(contador).get(linea).toString());
                 tokensArray.get(position).rowsArray.get(contador).put(linea, repeticiones + 1);
+                exists = true;
             }
-            exists = true;
             break;
         }
         
-        if (exists == false){
+        if (exists == false){ // Primera aparicion del token
             tokensArray.get(position).rowsArray.add(row);
         }
     }
