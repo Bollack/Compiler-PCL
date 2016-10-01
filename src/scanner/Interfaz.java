@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -219,17 +220,44 @@ public class Interfaz extends javax.swing.JFrame {
                 textArea.setText(result);
                 return;
             }
+            Integer contador;
             switch (token) {
+                
                 case ERROR:
                     result = result + "Error, simbolo no reconocido \n";
                     break;
-                case ID: case INT:
-                    result = result + "TOKEN: " + token + " " + lexer.lexeme + " " + lexer.line + "\n";
+                case ID: case INT: 
+                    
+                    Map<Integer, Integer> row = null;
+                    String valor = lexer.lexeme;
+                    Integer linea = lexer.line;
+                    Integer repeticiones = 1;
+                    row.put(linea, repeticiones);
+                    Boolean exists = false;
+                    
+                    for (contador = 0; contador <= tokensArray.size(); contador++){
+                        if (tokensArray.get(contador).value.equals(valor)) {
+                            increaseRow(linea, contador);
+                            exists = true;
+                            break;
+                        }
+                    }
+                    
+                    if (exists == false){
+                        objectToken objectToken = new objectToken(valor, "Token", row);
+                        tokensArray.add(objectToken);
+                    }
+                    
+                    result = result + "TOKEN: " + token + " " + valor + " " + linea + "\n";
                     break;
                 default:
                     result = result + "TOKEN: " + token + "\n";
             }
         }
+    }
+    
+    private void increaseRow(Integer linea, Integer position){
+        tokensArray.get(position).row.put(linea, tokensArray.get(position).row.get(linea) + 1);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
