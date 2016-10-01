@@ -226,7 +226,7 @@ public class Interfaz extends javax.swing.JFrame {
                 case ERROR:
                     result = result + "Error, simbolo no reconocido \n";
                     break;
-                case ID: case INT: 
+                case ID: case INT: // Hay que escribirle en esta linea todos los case que están en el Token.java
                     
                     Map<Integer, Integer> row = null;
                     String valor = lexer.lexeme;
@@ -237,7 +237,7 @@ public class Interfaz extends javax.swing.JFrame {
                     
                     for (contador = 0; contador <= tokensArray.size(); contador++){
                         if (tokensArray.get(contador).value.equals(valor)) {
-                            increaseRow(linea, contador);
+                            increaseRow(linea, contador, row);
                             exists = true;
                             break;
                         }
@@ -256,8 +256,23 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }
     
-    private void increaseRow(Integer linea, Integer position){
-        tokensArray.get(position).row.put(linea, tokensArray.get(position).row.get(linea) + 1);
+    private void increaseRow(Integer linea, Integer position, Map row){
+        Integer contador;
+        Boolean exists = false;
+        
+        for (contador = 0; contador <= tokensArray.get(position).rowsArray.size(); contador++){
+            Integer keyValue = Integer.parseInt(tokensArray.get(position).rowsArray.get(contador).keySet().toString());
+            if(keyValue.equals(linea)){
+                Integer repeticiones = Integer.parseInt(tokensArray.get(position).rowsArray.get(contador).get(linea).toString());
+                tokensArray.get(position).rowsArray.get(contador).put(linea, repeticiones + 1);
+            }
+            exists = true;
+            break;
+        }
+        
+        if (exists == false){
+            tokensArray.get(position).rowsArray.add(row);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
