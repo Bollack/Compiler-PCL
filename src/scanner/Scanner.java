@@ -44,8 +44,16 @@ public class Scanner {
         }
     }
     
-    public Scanner(String result){
-        
-    }
+    class wrongToken {
+        String value;
+        Map<Integer, Integer> row;
+        ArrayList<TreeMap> rowsArray = new ArrayList<>();
     
+        public wrongToken(String inputValue, TreeMap inputRow) {
+            this.row = new TreeMap<>();
+            value = inputValue;
+            row = inputRow;
+            rowsArray.add((TreeMap) row);
+        }
+    }
 }
