@@ -28,32 +28,4 @@ public class Scanner {
         File file = new File(path);
         jflex.Main.generate(file);
     }
-    
-    class Token {
-        String value;
-        String type;
-        Map<Integer, Integer> row;
-        ArrayList<TreeMap> rowsArray = new ArrayList<>();
-    
-        public Token(String inputValue, String inputType, TreeMap inputRow) {
-            this.row = new TreeMap<>();
-            value = inputValue;
-            type = inputType;
-            row = inputRow;
-            rowsArray.add((TreeMap) row);
-        }
-    }
-    
-    class wrongToken {
-        String value;
-        Map<Integer, Integer> row;
-        ArrayList<TreeMap> rowsArray = new ArrayList<>();
-    
-        public wrongToken(String inputValue, TreeMap inputRow) {
-            this.row = new TreeMap<>();
-            value = inputValue;
-            row = inputRow;
-            rowsArray.add((TreeMap) row);
-        }
-    }
 }
