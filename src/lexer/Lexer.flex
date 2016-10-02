@@ -1,7 +1,9 @@
 package Scanner;
 import static Token.*;
+import scanner.Token;
+
 %%
-%class Lexer
+%public class Lexer
 %type Token
 %line
 Letters = [a-zA-Z_]
@@ -9,6 +11,7 @@ Digits = [0-9]
 WHITE=[ \t\r\n]
 %{
 public String lexeme;
+public Integer line;
 %}
 %%
 {WHITE} {/*Ignore*/}
@@ -40,8 +43,8 @@ public String lexeme;
 "<<" {return RIGHT;}
 "<<=" {return RIGHT_ASSIGN;}
 ">>=" {return LEFT_ASSIGN;}
-{Letters}({Letters}|{Digits})* {lexeme=yytext(); return ID;}
- ("(-"{Digits}+")")|{Digits}+ {lexeme=yytext(); return INT;}
+{Letters}({Letters}|{Digits})* {lexeme=yytext(); line=yyline; return ID;}
+  ("(-"{Digits}+")")|{Digits}+ {lexeme=yytext(); line=yyline; return INT;}
 . {return ERROR;}
 
 
