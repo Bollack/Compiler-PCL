@@ -11,11 +11,11 @@ import java.util.TreeMap;
  */
 public class objectToken {
     String value;
-    String type;
+    Token type;
     TreeMap<Integer, Integer> row; //#Linea key, AparicionesXLinea Value
-    ArrayList<TreeMap> rowsArray = new ArrayList<>(); 
+    ArrayList<TreeMap> rowsArray = new ArrayList<>();  //Conjunto de apariciones por línea 
     
-    public objectToken(String inputValue, String inputType, TreeMap inputRow) {
+    public objectToken(String inputValue, Token inputType, TreeMap inputRow) {
         this.value = inputValue;
         this.type = inputType;
         this.row = inputRow;

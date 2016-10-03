@@ -68,6 +68,7 @@ public class TokensTypes {
         reservedWords.add(IF);
         reservedWords.add(IN); 
         reservedWords.add(INLINE); 
+        reservedWords.add(INT); 
         reservedWords.add(LABEL); 
         reservedWords.add(LONGINT); 
         reservedWords.add(MOD);
@@ -117,6 +118,8 @@ public class TokensTypes {
     
     
     
+        
+    public static int whichTypeIsIt(Token tokenActual){
     /*Devuelve:
         1 = operador
         2 = palabra reservada
@@ -125,8 +128,7 @@ public class TokensTypes {
         5 = Separador
         31 = Error ID (Largo)
         0 = Error
-    */    
-    public static int whichTypeIsIt(Token tokenActual){
+    */
         if (tokenActual == ID){
             return 3;
         }else if(operators.contains(tokenActual)){
@@ -144,8 +146,29 @@ public class TokensTypes {
         }
     }
 
-    //Int to char  
+    
+    public static String whichTypeStringIsIt(Token tokenActual){
+    /*Devuelve el string que identifica el tipo de token que es
+    */
+        if (tokenActual == ID){
+            return "Identificador";
+        }else if(operators.contains(tokenActual)){
+            return "Operador";
+        }else if(reservedWords.contains(tokenActual)){
+            return "Palabra reservada";
+        }else if(literals.contains(tokenActual)){
+            return "Literal";
+        }else if(separatos.contains(tokenActual)){
+            return "Separador";
+        }else{
+        return "NULL"; //Nunca debería devolver esto
+        }
+    }
+    
+    
+    /*No se utiliza en el scanner*/
     public static String itoa(String hilera){
+        //Int to char  
         String charMadeIntString=hilera.substring(1,hilera.length()-1); //Se quita el #
         int codigoAscii = Integer.parseInt(charMadeIntString);
         char ch = (char) codigoAscii;

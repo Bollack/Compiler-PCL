@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -22,7 +23,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import lexer.Lexer;
 import java.util.TreeMap;
-import static scanner.Token.CHAR_MADE_INT_LITERAL;
 import  scanner.TokensTypes;
 
 /**
@@ -56,6 +56,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Scanner PCL");
+        setResizable(false);
 
         labelText.setText("Ruta:");
 
@@ -199,26 +200,36 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }
     
-    /*
-    private String printTokenTable(){
+    
+    private String getTokenTable(){
+        /*Devuelve un string que representará la tabla de tokens encontrados*/
         int numLineasTokenExiste;
-        String lineaAImprimir = "Token ";
-        //Recorro tokensArray
+        //Línea inicial
+        String lineaAImprimir = "Token    TipoToken  Valor   (Línea)Apariciones por línea \n";
+        
+        String linea;
+        String aparicionesLinea;
+        //Recorre los tokens encontrados
         for (int i = 0; i<tokensArray.size(); i++){
             
-            lineaAImprimir += tokensArray.get(i).type.toString() +" "+tokensArray.get(i).value.toString()+" ";
+            //Imprime el token encontrado
+            lineaAImprimir += tokensArray.get(i).value +" "+TokensTypes.whichTypeStringIsIt(tokensArray.get(i).type)+" ";
             
             
             numLineasTokenExiste = tokensArray.get(i).rowsArray.size();
+            //Itera por las líneas en las que apareció e imprime
             for (int j = 0; j<numLineasTokenExiste; j++){
-                tokensArray.get(i).rowsArray.get(i).
+                linea = tokensArray.get(i).rowsArray.get(j).lastEntry().getKey().toString();
+                aparicionesLinea = tokensArray.get(i).rowsArray.get(j).lastEntry().getValue().toString();
+                
+                //Se añade los valores a la linea a imprimir
+                lineaAImprimir+= "("+linea+")"+aparicionesLinea+" ";
             }
+            lineaAImprimir+= "\n ";
         }
-        
-        
-        
+        return lineaAImprimir;   
     }
-    */
+    
     private void analizeLexer() throws IOException {
         Reader reader = new BufferedReader (new FileReader(routeToFileField.getText()));
         Lexer lexer = new Lexer(reader);
@@ -229,13 +240,20 @@ public class Interfaz extends javax.swing.JFrame {
             Token token = lexer.yylex();
 
             if (token == null) {
-                result = result + "EOF";
+                result += this.getTokenTable();
+                result = result + "Fin del archivo.";
                 textArea.setText(result);
                 return;
             }
-            
-            
+
             Integer contador;
+            String valor  = lexer.lexeme;
+            int linea = lexer.line;
+            TreeMap<Integer, Integer> row = new TreeMap();
+            int repeticiones;
+            Boolean exists;
+            
+            switch (TokensTypes.whichTypeIsIt(token)) {
             /*
                 1 = operador
                 2 = palabra reservada
@@ -245,14 +263,6 @@ public class Interfaz extends javax.swing.JFrame {
                 31 = Error ID (Largo)
                 0 = Error
             */
-            String valor  = lexer.lexeme;
-            int linea = lexer.line;
-            TreeMap<Integer, Integer> row = new TreeMap();
-            int repeticiones;
-            Boolean exists;
-            
-            switch (TokensTypes.whichTypeIsIt(token)) {
-                
                 case 0: //Errores
 
                     result = result + "Error léxico en línea "+linea +", simbolo "+valor+" no reconocido. \n";
@@ -279,11 +289,12 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, "Tipo", row);
+                        
+                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
                         tokensArray.add(objectToken);
                     }
                     
-                    result = result + "TOKEN OPERADOR: " + token + " " + valor + " " + linea + "\n";
+                    //result = result + "TOKEN OPERADOR: " + token + " " + valor + " " + linea + "\n";
                     break;
                 case 2: //PALABRA RESERVADA
                     repeticiones = 1;
@@ -301,11 +312,11 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, "Tipo", row);
+                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
                         tokensArray.add(objectToken);
                     }
                     
-                    result = result + "TOKEN PALABRA RESERVADA: " + token + " " + valor + " " + linea + "\n";
+                    //result = result + "TOKEN PALABRA RESERVADA: " + token + " " + valor + " " + linea + "\n";
                     break;
                 case 3: //Identificador
                     repeticiones = 1;
@@ -325,11 +336,11 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, "Tipo", row);
+                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
                         tokensArray.add(objectToken);
                     }
                     
-                    result = result + "TOKEN IDENTIFICADOR: " + token + " " + valor + " " + linea + "\n";
+                    //result = result + "TOKEN IDENTIFICADOR: " + token + " " + valor + " " + linea + "\n";
                     break;
                 case 4: //Literal
                     repeticiones = 1;
@@ -347,11 +358,11 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, "Tipo", row);
+                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
                         tokensArray.add(objectToken);
                     }
                     
-                    result = result + "TOKEN LITERAL: " + token + " " + valor + " " + linea + "\n";
+                    //result = result + "TOKEN LITERAL: " + token + " " + valor + " " + linea + "\n";
                     break;
                 case 5: //Separador
                     repeticiones = 1;
@@ -369,14 +380,14 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, "Tipo", row);
+                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
                         tokensArray.add(objectToken);
                     }
                     
-                    result = result + "TOKEN SEPARADOR: " + token + " " + valor + " " + linea + "\n";
+                    //result = result + "TOKEN SEPARADOR: " + token + " " + valor + " " + linea + "\n";
                     break;
                 default:
-                    result = result + "TOKEN: " + token + "\n";
+                   // result = result + "TOKEN: " + token + "\n";
             }
         }
     }
@@ -389,7 +400,11 @@ public class Interfaz extends javax.swing.JFrame {
         
         for (contador = 0; contador < tokensArray.get(position).rowsArray.size(); contador++){
           
-            Integer keyValue = Integer.parseInt(tokensArray.get(position).rowsArray.get(contador).keySet().toString());
+            Integer keyValue;
+            ArrayList<TreeMap> lineasDondeTokenExiste =tokensArray.get(position).rowsArray;
+            Set llaves = lineasDondeTokenExiste.get(contador).keySet();
+            Object llaveDelSet = llaves.iterator().next();
+            keyValue = Integer.parseInt(llaveDelSet.toString());
             if(keyValue.equals(linea)){
                 Integer repeticiones = Integer.parseInt(tokensArray.get(position).rowsArray.get(contador).get(linea).toString());
                 tokensArray.get(position).rowsArray.get(contador).put(linea, repeticiones + 1);
