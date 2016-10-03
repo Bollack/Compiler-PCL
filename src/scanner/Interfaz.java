@@ -290,7 +290,7 @@ public class Interfaz extends javax.swing.JFrame {
                     
                     if (exists == false){
                         
-                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
+                        objectToken objectToken = new objectToken(valor, token, row);
                         tokensArray.add(objectToken);
                     }
                     
@@ -312,7 +312,7 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
+                        objectToken objectToken = new objectToken(valor, token, row);
                         tokensArray.add(objectToken);
                     }
                     
@@ -336,7 +336,7 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
+                        objectToken objectToken = new objectToken(valor, token, row);
                         tokensArray.add(objectToken);
                     }
                     
@@ -358,7 +358,7 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
+                        objectToken objectToken = new objectToken(valor, token, row);
                         tokensArray.add(objectToken);
                     }
                     
@@ -380,7 +380,7 @@ public class Interfaz extends javax.swing.JFrame {
                     }
                     
                     if (exists == false){
-                        objectToken objectToken = new objectToken(valor, lexer.yylex(), row);
+                        objectToken objectToken = new objectToken(valor, token, row);
                         tokensArray.add(objectToken);
                     }
                     
