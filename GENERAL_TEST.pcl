@@ -1,0 +1,23 @@
+
+//Let's Start this real test, like a real programmer
+
+VAR1= 5
+vaR2= 6
+var3= 7
+var_test4= 0
+science1= 3.0E4
+science2= (2.7E-4)-science2
+whatIF= "That kills the Scanner"
+
+IF VAR1<=vaR2 THEN
+	WRITE ("This is going great")
+
+ELSE  
+	var_test4 = VAR1 - var3
+	IF var_test4<VAR1 AND var3>vaR2 THEN
+		// let's test that later with an OR
+		{This is where the magic begins}
+		(* I'm overflowing this test with comments
+			just to check that everything is ok *)
+
+	
