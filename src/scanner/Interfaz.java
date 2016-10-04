@@ -23,6 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import lexer.Lexer;
 import java.util.TreeMap;
+import javax.swing.table.DefaultTableModel;
 import  scanner.TokensTypes;
 
 /**
@@ -53,10 +54,12 @@ public class Interfaz extends javax.swing.JFrame {
         scanButton = new javax.swing.JButton();
         routeToFileField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaTokens = new javax.swing.JTable();
+        labelTable1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Scanner PCL");
-        setResizable(false);
 
         labelText.setText("Ruta:");
 
@@ -64,6 +67,8 @@ public class Interfaz extends javax.swing.JFrame {
         textArea.setRows(5);
         jScrollPane1.setViewportView(textArea);
 
+        labelTable.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelTable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTable.setText("Tabla de Tokens");
 
         scanButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -87,6 +92,22 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        tablaTokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tablaTokens.setColumnSelectionAllowed(true);
+        jScrollPane2.setViewportView(tablaTokens);
+        tablaTokens.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        labelTable1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelTable1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTable1.setText("Tabla de Tokens");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,21 +116,27 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTable)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelText)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(routeToFileField, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(211, 211, 211)
-                                .addComponent(scanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(labelText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(routeToFileField, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labelTable, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addComponent(labelTable1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(scanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(239, 239, 239))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,11 +148,15 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(searchButton))
                 .addGap(8, 8, 8)
                 .addComponent(scanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addGap(11, 11, 11)
                 .addComponent(labelTable)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelTable1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -200,37 +231,69 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }
     
-    
-    private String getTokenTable(){
-        /*Devuelve un string que representará la tabla de tokens encontrados*/
+    /*
+    // create object of table and table model
+ JTable tbl = new JTable();
+ DefaultTableModel dtm = new DefaultTableModel(0, 0);
+
+// add header of the table
+String header[] = new String[] { "Prority", "Task Title", "Start",
+            "Pause", "Stop", "Statulses" };
+
+// add header in table model     
+ dtm.setColumnIdentifiers(header);
+   //set model into the table object
+       tbl.setModel(dtm);
+
+     // add row dynamically into the table      
+for (int count = 1; count <= 30; count++) {
+        dtm.addRow(new Object[] { "data", "data", "data",
+                "data", "data", "data" });
+ }
+    */
+    private void getTokenTable(){
+        /*Actualiza la tabla actual de tokens con los tokens encontrados*/
+        DefaultTableModel dtm = new DefaultTableModel(0, 0);
+        String header[] = new String[] { "Token", "Tipo de Token", "(Línea)Apariciones por línea"};
+         dtm.setColumnIdentifiers(header);
+        tablaTokens.setModel(dtm);
         int numLineasTokenExiste;
-        //Línea inicial
-        String lineaAImprimir = "Token    TipoToken  Valor   (Línea)Apariciones por línea \n";
-        
+        String valorToken;
+        String tipoToken;
         String linea;
-        String aparicionesLinea;
+        String lineaCiclo;
+        String aparicionesCiclo;
         //Recorre los tokens encontrados
         for (int i = 0; i<tokensArray.size(); i++){
             
-            //Imprime el token encontrado
-            lineaAImprimir += tokensArray.get(i).value +" "+TokensTypes.whichTypeStringIsIt(tokensArray.get(i).type)+" ";
+            //Añade el valor del token encontrado y el tipo de este
+            valorToken = tokensArray.get(i).value;
+            tipoToken = TokensTypes.whichTypeStringIsIt(tokensArray.get(i).type);
             
             
             numLineasTokenExiste = tokensArray.get(i).rowsArray.size();
             //Itera por las líneas en las que apareció e imprime
+            linea = "";
             for (int j = 0; j<numLineasTokenExiste; j++){
-                linea = tokensArray.get(i).rowsArray.get(j).lastEntry().getKey().toString();
-                aparicionesLinea = tokensArray.get(i).rowsArray.get(j).lastEntry().getValue().toString();
+                lineaCiclo = tokensArray.get(i).rowsArray.get(j).lastEntry().getKey().toString();
+                aparicionesCiclo = tokensArray.get(i).rowsArray.get(j).lastEntry().getValue().toString();
                 
                 //Se añade los valores a la linea a imprimir
-                lineaAImprimir+= "("+linea+")"+aparicionesLinea+" ";
+                linea+= "("+lineaCiclo+")"+aparicionesCiclo+" ";
             }
-            lineaAImprimir+= "\n ";
+                
+            dtm.addRow(new Object[] {valorToken, tipoToken,linea});
         }
-        return lineaAImprimir;   
+        //Se actualiza la tabla con el modelo
+        tablaTokens.setModel(dtm);
     }
     
     private void analizeLexer() throws IOException {
+        
+        if(!new File(routeToFileField.getText()).exists()){
+            textArea.setText("Archivo no encontrado \n");
+            return;
+        }
         Reader reader = new BufferedReader (new FileReader(routeToFileField.getText()));
         Lexer lexer = new Lexer(reader);
         tokensArray = new ArrayList<>();
@@ -240,7 +303,7 @@ public class Interfaz extends javax.swing.JFrame {
             Token token = lexer.yylex();
 
             if (token == null) {
-                result += this.getTokenTable();
+                getTokenTable();
                 result = result + "Fin del archivo.";
                 textArea.setText(result);
                 return;
@@ -249,6 +312,7 @@ public class Interfaz extends javax.swing.JFrame {
             Integer contador;
             String valor  = lexer.lexeme;
             int linea = lexer.line;
+            linea++; //FIX PARA EDITORES. ASÍ COMIENZA EN LÍNEA 1.
             TreeMap<Integer, Integer> row = new TreeMap();
             int repeticiones;
             Boolean exists;
@@ -314,6 +378,7 @@ public class Interfaz extends javax.swing.JFrame {
                     if (exists == false){
                         objectToken objectToken = new objectToken(valor, token, row);
                         tokensArray.add(objectToken);
+                        
                     }
                     
                     //result = result + "TOKEN PALABRA RESERVADA: " + token + " " + valor + " " + linea + "\n";
@@ -326,6 +391,7 @@ public class Interfaz extends javax.swing.JFrame {
                     for (contador = 0; contador < tokensArray.size(); contador++){
                         
                         //if (tokensArray.size()!=0){
+                        valor =valor.toLowerCase(); //parche
                         if (tokensArray.get(contador).value.equals(valor)) {
                             increaseRow(linea, contador, row);
                             exists = true;
@@ -420,11 +486,14 @@ public class Interfaz extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelTable;
+    private javax.swing.JLabel labelTable1;
     private javax.swing.JLabel labelText;
     private javax.swing.JTextField routeToFileField;
     private javax.swing.JButton scanButton;
     private javax.swing.JButton searchButton;
+    private javax.swing.JTable tablaTokens;
     private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 }

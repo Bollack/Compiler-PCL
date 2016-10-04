@@ -9,7 +9,6 @@ import scanner.Token;
 %type Token
 %line
 %8bit
-%caseless
 
 
 
@@ -40,12 +39,12 @@ Exponent = [eE] [+-]? {Digits}+
 CaracterString = [^\"\\]
 CaracterChar = [^\r\n\'\\]
 Caracter = "#"{Digits}{Digits} | "#"{Digits} | "#"{Digits}{Digits}{Digits}
+Operadores = "," |";"| "++"| "--" |">=" |">" |"<="| "<" |"<>" |"=" |"+"| "-"| "*"| "/"|"("| ")" |"[" |"]"| ":=" |"."| ":"| "+=" |"-=" |"*="| "/="| ">>" |"<<"| "<<="|">>="
+CaracteresValidosIdentificadores = {Operadores}|{Digits}|{Letters}|{WhiteSpace}
+CaracteresNoValidosIdentificadores = "\"" |"$" | "%" |"&" |"'" |"\\" |"!" 
+|"?" |"¡" |"¿" |"^"|"~"|"_"
 
-/*Operadores = "," |";"| "++"| "--" |">=" |">" |"<="| "<" |"<>" |
-"=" |"+"| "-"| "*"| "/"|
-"("| ")" |"[" |"]"| ":=" |"."| ":"| "+=" |"-=" |"*="| "/="| ">>" |"<<"| 
-"<<="|">>="
-*/
+
 %%
 
 
@@ -144,7 +143,7 @@ Caracter = "#"{Digits}{Digits} | "#"{Digits} | "#"{Digits}{Digits}{Digits}
 
 /*Identificadores */ 
 
-{Letters}({Letters}|{Digits})*  {lexeme=yytext(); line=yyline; if(yylength()<128){ return ID;}else{ return ERROR_ID;}}
+{Letters}({Letters}|{Digits})* {lexeme=yytext(); line=yyline; if(yylength()<128){ return ID;}else{ return ERROR_ID;}}
 
 /*Literales */ 
 
@@ -158,9 +157,7 @@ Caracter = "#"{Digits}{Digits} | "#"{Digits} | "#"{Digits}{Digits}{Digits}
 
 /* ERROR */
 . {lexeme=yytext(); line=yyline;return ERROR;}
-
-
-
+{Letters}({Letters}|{Digits})*{CaracteresNoValidosIdentificadores}+({Letters}|{Digits})* {lexeme=yytext(); line=yyline;return ERROR;}  //Error identificador
 
 
 
