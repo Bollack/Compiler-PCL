@@ -1,0 +1,19 @@
+CommentTest.pcl
+
+	1- Comentarios de línea
+	2- Comentarios de bloque en ambos formatos (**) {}
+	3- ReservedToken en comentarios
+	4- Identificadores, operadores  literales en comentario
+	5- Identificadores con símbolos entre ellos
+
+GENERAL_TEST.pcl
+
+	1- Asignación de literales a identificadores
+	2- Literales de distintos tipos: notación cientifica, integer, flotantes.
+	3- Identificadores caseless
+	4- Combinación entre identificadores y ReservedTokens
+	5- Asignación de strings
+	6- Identificadores comenzados en número
+	7- Identificadores de más de 127 cáracteres
+	8- Operadores entre identificadores
+	9- Combinación de reservedTokens
